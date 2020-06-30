@@ -118,5 +118,15 @@ a {
 .white-section{
     background-color: #F5F5F5;
  }
+ /*Section: Work*/
+
+.card-column {
+  padding: 3% 2%;
+}
+.card-header{
+  background-color:#89D5D2;
+  /*#b0bec5*/
+
+}
 
   
