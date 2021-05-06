@@ -9,7 +9,7 @@ app.listen(port, () => {
 })
 
 
-//Database
+//Connect to mySql Database
 const mysql = require('mysql');
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -18,42 +18,45 @@ const connection = mysql.createConnection({
   database: 'demo',
   port: 3306
 });
+
 connection.connect((err) => {
   if (err) throw err;
-  console.log('Connected!');
+  console.log('Successfully connected to the database!');
 });
 
-app.engine('html', require('ejs').renderFile);
+//Test for data extraction
+/*
+connection.query('SELECT * FROM weather', (err, rows) => {
+  if (err) throw err;
+  console.log('Data received from Db:');
+  console.log(rows);
+});
+*/
+
+//Set the view engine to ejs
 app.set('view engine', 'ejs');
+app.use(express.static("public"));
 
-var obj = {};
-app.get('/', function(req, res) {
-    connection.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected");
-        var sql = "SELECT * FROM weather";
-        connection.query(sql, function (err, result) {
-            if (err) {
-                throw err;
-            } else {
-                obj = {print: result};
-                res.render('data', {obj: obj});
-            }
-        });
-    });
+//Use res.render to load up an ejs file
+app.get('/', function (req, res) {
+  connection.query('SELECT * FROM weather', (err, rows) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log('Success');
+      //Send the first row object to index.ejs file
+      res.render('index', {row: rows[0]});
+    }
+  });
+
 });
+
 
 /*
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('Connected!');
-});
 
-connection.query('SELECT * FROM weather', (err,rows) => {
-    if(err) throw err;
-  
-    console.log('Data received from Db:');
-    console.log(rows);
-  });
+
+
+
+ 
 
   */
