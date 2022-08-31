@@ -54,7 +54,7 @@
     "mime-types": "^2.1.27",
     "minimatch": "^3.0.4",
     "moment": "^2.29.1",
-    "moment-timezone": "^0.5.33",
+    "moment-timezone": "^0.5.35",
     "ms": "^2.0.0",
     "mysql": "^2.18.1",
     "negotiator": "^0.6.2",
